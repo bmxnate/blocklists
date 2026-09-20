@@ -1,0 +1,63 @@
+# Plain domain blocklist for Technitium blockListUrls
+# One domain per line, no prefixes
+
+# Major ad/tracking networks
+doubleclick.net
+googleadservices.com
+googlesyndication.com
+googletagmanager.com
+google-analytics.com
+facebook.net
+fbcdn.net
+connect.facebook.net
+twitter.com
+t.co
+analytics.twitter.com
+ads.twitter.com
+linkedin.com
+ads.linkedin.com
+pinterest.com
+ads.pinterest.com
+snapchat.com
+ads.snapchat.com
+tiktok.com
+ads.tiktok.com
+ads.tiktokv.com
+adjust.com
+appsflyer.com
+branch.io
+kochava.com
+tenjin.io
+singular.net
+
+# Streaming service ad domains (from darthvader666uk gist)
+ingest.webcol.sdp.peacocktv.com
+telemetry.nbcuott.com
+ssai.peacocktv.com
+mparticle.com
+fwmrm.net
+scorecardresearch.com
+omtrdc.net
+segment.io
+mixpanel.com
+amplitude.com
+heap.io
+
+# Native device trackers
+native.amazon
+native.roku
+native.samsung
+native.apple
+native.lgwebos
+native.tiktok
+
+# DoH bypass domains (from Hagezi doh-vpn-proxy-bypass)
+doh.cleanbrowsing.org
+doh.dns.sb
+doh.libredns.gr
+doh.dnsforge.de
+dns.cloudflare.com
+dns.google
+dns.quad9.net
+dns.adguard.com
+dns.nextdns.io

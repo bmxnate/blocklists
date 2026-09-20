@@ -1,0 +1,41 @@
+# Peacock streaming ads (from thepeacockproject/lit-bg)
+# AdBlock format: ||domain^
+||g*-sle-us-cmaf-prd-fy.cdn.peacocktv.com^$important
+||mparticle.com^$important
+||fwmrm.net^$important
+||scorecardresearch.com^$important
+||omtrdc.net^$important
+||ingest.webcol.sdp.peacocktv.com^$important
+||telemetry.nbcuott.com^$important
+||ssai.peacocktv.com^$important
+
+# HBO Max / Max
+||hbo.com^$important
+||hbomax.com^$important
+||max.com^$important
+
+# Disney+
+||disneyplus.com^$important
+||dssott.com^$important
+||bamgrid.com^$important
+
+# Paramount+
+||paramountplus.com^$important
+||cbs.com^$important
+||cbsinteractive.com^$important
+
+# Roku
+||roku.com^$important
+||rovicorp.com^$important
+||ravm.tv^$important
+
+# Apple TV+
+||apple.com^$important
+||appletv.com^$important
+||skadnetwork.com^$important
+
+# Generic streaming trackers
+||segment.io^$important
+||mixpanel.com^$important
+||amplitude.com^$important
+||heap.io^$important
