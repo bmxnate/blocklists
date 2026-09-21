@@ -1,42 +1,110 @@
 #!/bin/bash
 # Update script for blocklists
 # Fetches upstream sources and regenerates clean format-separated files
+#
+# Usage: ./update.sh [OPTIONS]
+#   --hagezi            Enable Hagezi Pro Plus (default: on)
+#   --no-hagezi         Disable Hagezi Pro Plus
+#   --oisd              Enable OISD Small (default: on)
+#   --no-oisd           Disable OISD Small
+#   --darthvader        Enable darthvader666uk streaming ads (default: on)
+#   --no-darthvader     Disable darthvader666uk streaming ads
+#   --lit-bg            Enable lit-bg/Peacock (default: on)
+#   --no-lit-bg         Disable lit-bg/Peacock
+#   --ajstrick81        Enable ajstrick81/Peacock-Ads (default: on)
+#   --no-ajstrick81     Disable ajstrick81/Peacock-Ads
+#   --peacock-only      Generate peacock-only lists (lit-bg + seeds) to lists/peacock-*.txt
+#   --help              Show this help
+#
+# Sources can also be configured via environment variables:
+#   ENABLE_HAGEZI=1, ENABLE_OISD=1, ENABLE_DARTHVADER=1, ENABLE_LIT_BG=1, ENABLE_AJSTRICK81=1
+#   Set to 0 to disable
 
 set -euo pipefail
+
+# Default source toggles (can be overridden by env vars or CLI args)
+ENABLE_HAGEZI="${ENABLE_HAGEZI:-1}"
+ENABLE_OISD="${ENABLE_OISD:-1}"
+ENABLE_DARTHVADER="${ENABLE_DARTHVADER:-1}"
+ENABLE_LIT_BG="${ENABLE_LIT_BG:-1}"
+ENABLE_AJSTRICK81="${ENABLE_AJSTRICK81:-1}"
+PEACOCK_ONLY="${PEACOCK_ONLY:-0}"
+
+# Parse CLI args
+for arg in "$@"; do
+  case "$arg" in
+    --hagezi) ENABLE_HAGEZI=1 ;;
+    --no-hagezi) ENABLE_HAGEZI=0 ;;
+    --oisd) ENABLE_OISD=1 ;;
+    --no-oisd) ENABLE_OISD=0 ;;
+    --darthvader) ENABLE_DARTHVADER=1 ;;
+    --no-darthvader) ENABLE_DARTHVADER=0 ;;
+    --lit-bg) ENABLE_LIT_BG=1 ;;
+    --no-lit-bg) ENABLE_LIT_BG=0 ;;
+    --ajstrick81) ENABLE_AJSTRICK81=1 ;;
+    --no-ajstrick81) ENABLE_AJSTRICK81=0 ;;
+    --peacock-only) PEACOCK_ONLY=1 ;;
+    --help)
+      grep '^#' "$0" | head -20 | cut -c4-
+      exit 0
+      ;;
+    *) echo "Unknown option: $arg" >&2; exit 1 ;;
+  esac
+done
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$REPO_DIR"
 
+# Peacock-only mode: disable all other sources, enable only lit-bg, output to peacock-* files
+if [ "$PEACOCK_ONLY" = 1 ]; then
+  ENABLE_HAGEZI=0
+  ENABLE_OISD=0
+  ENABLE_DARTHVADER=0
+  ENABLE_LIT_BG=1
+  ENABLE_AJSTRICK81=0
+  OUTPUT_PREFIX="peacock-"
+  echo "=== Peacock-only mode (lit-bg + seeds) ==="
+else
+  OUTPUT_PREFIX=""
+fi
+
 echo "=== Updating blocklists ==="
+echo "Sources enabled: $([ "$ENABLE_HAGEZI" = 1 ] && echo -n "hagezi ")$([ "$ENABLE_OISD" = 1 ] && echo -n "oisd ")$([ "$ENABLE_DARTHVADER" = 1 ] && echo -n "darthvader ")$([ "$ENABLE_LIT_BG" = 1 ] && echo -n "lit-bg ")$([ "$ENABLE_AJSTRICK81" = 1 ] && echo -n "ajstrick81 ")"
 
 # Temp directory for raw downloads
 TMPDIR=$(mktemp -d)
 trap 'rm -rf "$TMPDIR"' EXIT
 
-# Fetch Hagezi Multi PRO Plus (AdBlock format)
-echo "Fetching Hagezi Pro Plus..."
-curl -sL "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.plus.txt" \
-  -o "$TMPDIR/hagezi-pro.txt" 2>/dev/null || echo "  (Hagezi fetch failed)"
+# Fetch sources
+if [ "$ENABLE_HAGEZI" = 1 ]; then
+  echo "Fetching Hagezi Pro Plus..."
+  curl -sL "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.plus.txt" \
+    -o "$TMPDIR/hagezi-pro.txt" 2>/dev/null || echo "  (Hagezi fetch failed)"
+fi
 
-# Fetch OISD small (domains with wildcards)
-echo "Fetching OISD small..."
-curl -sL "https://raw.githubusercontent.com/sjhgvr/oisd/main/domainswild2_small.txt" \
-  -o "$TMPDIR/oisd.txt" 2>/dev/null || echo "  (OISD fetch failed)"
+if [ "$ENABLE_OISD" = 1 ]; then
+  echo "Fetching OISD small..."
+  curl -sL "https://raw.githubusercontent.com/sjhgvr/oisd/main/domainswild2_small.txt" \
+    -o "$TMPDIR/oisd.txt" 2>/dev/null || echo "  (OISD fetch failed)"
+fi
 
-# Fetch darthvader666uk streaming ads (from gist)
-echo "Fetching darthvader666uk streaming ads..."
-curl -sL "https://gist.githubusercontent.com/darthvader666uk/ccfdab18b9d59830876c373db8b4210d/raw/filterlist.txt" \
-  -o "$TMPDIR/darthvader.txt" 2>/dev/null || echo "  (darthvader666uk fetch failed)"
+if [ "$ENABLE_DARTHVADER" = 1 ]; then
+  echo "Fetching darthvader666uk streaming ads..."
+  curl -sL "https://gist.githubusercontent.com/darthvader666uk/ccfdab18b9d59830876c373db8b4210d/raw/filterlist.txt" \
+    -o "$TMPDIR/darthvader.txt" 2>/dev/null || echo "  (darthvader666uk fetch failed)"
+fi
 
-# Fetch lit-bg/Peacock filterlist
-echo "Fetching lit-bg/Peacock filterlist..."
-curl -sL "https://raw.githubusercontent.com/lit-bg/Peacock/main/filterlist.txt" \
-  -o "$TMPDIR/peacock.txt" 2>/dev/null || echo "  (lit-bg/Peacock fetch failed)"
+if [ "$ENABLE_LIT_BG" = 1 ]; then
+  echo "Fetching lit-bg/Peacock filterlist..."
+  curl -sL "https://raw.githubusercontent.com/lit-bg/Peacock/main/filterlist.txt" \
+    -o "$TMPDIR/peacock.txt" 2>/dev/null || echo "  (lit-bg/Peacock fetch failed)"
+fi
 
-# Fetch ajstrick81 Peacock-Ads
-echo "Fetching ajstrick81/Peacock-Ads..."
-curl -sL "https://raw.githubusercontent.com/ajstrick81/Peacock-Ads/main/peacock-adguard-user-rules.txt" \
-  -o "$TMPDIR/ajstrick81.txt" 2>/dev/null || echo "  (ajstrick81/Peacock-Ads fetch failed)"
+if [ "$ENABLE_AJSTRICK81" = 1 ]; then
+  echo "Fetching ajstrick81/Peacock-Ads..."
+  curl -sL "https://raw.githubusercontent.com/ajstrick81/Peacock-Ads/main/peacock-adguard-user-rules.txt" \
+    -o "$TMPDIR/ajstrick81.txt" 2>/dev/null || echo "  (ajstrick81/Peacock-Ads fetch failed)"
+fi
 
 # Build adblock.txt - AdBlock format (||domain^)
 echo "Building adblock.txt..."
@@ -90,27 +158,32 @@ echo "Building adblock.txt..."
 EOF
 
   # Hagezi Pro Plus is already in AdBlock format - extract ||domain^ lines
-  if [[ -f "$TMPDIR/hagezi-pro.txt" ]]; then
+  if [ "$ENABLE_HAGEZI" = 1 ] && [[ -f "$TMPDIR/hagezi-pro.txt" ]]; then
     grep -E '^\|\|[^|]+\^' "$TMPDIR/hagezi-pro.txt" | head -50000 || true
   fi
   
+  # lit-bg/Peacock - extract ||domain^ lines (AdBlock format)
+  if [ "$ENABLE_LIT_BG" = 1 ] && [[ -f "$TMPDIR/peacock.txt" ]]; then
+    grep -E '^\|\|[^|]+\^' "$TMPDIR/peacock.txt" | head -5000 || true
+  fi
+  
   # darthvader666uk streaming ads - extract ||domain^ lines
-  if [[ -f "$TMPDIR/darthvader.txt" ]]; then
+  if [ "$ENABLE_DARTHVADER" = 1 ] && [[ -f "$TMPDIR/darthvader.txt" ]]; then
     grep -E '^\|\|[^|]+\^' "$TMPDIR/darthvader.txt" | head -5000 || true
   fi
   
   # ajstrick81 Peacock-Ads - extract ||domain^ lines
-  if [[ -f "$TMPDIR/ajstrick81.txt" ]]; then
+  if [ "$ENABLE_AJSTRICK81" = 1 ] && [[ -f "$TMPDIR/ajstrick81.txt" ]]; then
     grep -E '^\|\|[^|]+\^' "$TMPDIR/ajstrick81.txt" | head -5000 || true
   fi
   
   # Convert OISD wildcards to AdBlock format
-  if [[ -f "$TMPDIR/oisd.txt" ]]; then
+  if [ "$ENABLE_OISD" = 1 ] && [[ -f "$TMPDIR/oisd.txt" ]]; then
     grep -E '^\*\.' "$TMPDIR/oisd.txt" | sed 's/^\*\.//; s/$/\^/' | sed 's/^/||/' | head -20000 || true
     # Also plain domains in OISD
     grep -v '^#' "$TMPDIR/oisd.txt" | grep -v '^\*' | sed 's/^/||/; s/$/\^/' | head -20000 || true
   fi
-} | sort -u > lists/adblock.txt.new && mv lists/adblock.txt.new lists/adblock.txt
+} | sort -u > "lists/${OUTPUT_PREFIX}adblock.txt.new" && mv "lists/${OUTPUT_PREFIX}adblock.txt.new" "lists/${OUTPUT_PREFIX}adblock.txt"
 
 # Build regex.txt - .NET regex format
 echo "Building regex.txt..."
@@ -154,10 +227,10 @@ echo "Building regex.txt..."
 EOF
 
   # Extract /.../ regex from Peacock source if available
-  if [[ -f "$TMPDIR/peacock.txt" ]]; then
+  if [ "$ENABLE_LIT_BG" = 1 ] && [[ -f "$TMPDIR/peacock.txt" ]]; then
     grep -E '^/.*/$' "$TMPDIR/peacock.txt" | sed 's|^/||; s|/$||' || true
   fi
-} | sort -u > lists/regex.txt.new && mv lists/regex.txt.new lists/regex.txt
+} | sort -u > "lists/${OUTPUT_PREFIX}regex.txt.new" && mv "lists/${OUTPUT_PREFIX}regex.txt.new" "lists/${OUTPUT_PREFIX}regex.txt"
 
 # Build hosts.txt - plain domains
 echo "Building hosts.txt..."
@@ -230,27 +303,32 @@ dns.nextdns.io
 EOF
 
   # Hagezi Pro Plus - extract domains from ||domain^ format
-  if [[ -f "$TMPDIR/hagezi-pro.txt" ]]; then
+  if [ "$ENABLE_HAGEZI" = 1 ] && [[ -f "$TMPDIR/hagezi-pro.txt" ]]; then
     grep -E '^\|\|[^|]+\^' "$TMPDIR/hagezi-pro.txt" | sed -E 's/\|\|([^|]+)\^/\1/' | head -50000 || true
   fi
   
+  # lit-bg/Peacock - extract domains from ||domain^ format
+  if [ "$ENABLE_LIT_BG" = 1 ] && [[ -f "$TMPDIR/peacock.txt" ]]; then
+    grep -E '^\|\|[^|]+\^' "$TMPDIR/peacock.txt" | sed -E 's/\|\|([^|]+)\^/\1/' | head -5000 || true
+  fi
+  
   # darthvader666uk streaming ads - extract domains from ||domain^ format
-  if [[ -f "$TMPDIR/darthvader.txt" ]]; then
+  if [ "$ENABLE_DARTHVADER" = 1 ] && [[ -f "$TMPDIR/darthvader.txt" ]]; then
     grep -E '^\|\|[^|]+\^' "$TMPDIR/darthvader.txt" | sed -E 's/\|\|([^|]+)\^/\1/' | head -5000 || true
   fi
   
   # ajstrick81 Peacock-Ads - extract domains from ||domain^ format
-  if [[ -f "$TMPDIR/ajstrick81.txt" ]]; then
+  if [ "$ENABLE_AJSTRICK81" = 1 ] && [[ -f "$TMPDIR/ajstrick81.txt" ]]; then
     grep -E '^\|\|[^|]+\^' "$TMPDIR/ajstrick81.txt" | sed -E 's/\|\|([^|]+)\^/\1/' | head -5000 || true
   fi
   
   # OISD domains (strip wildcards and comments)
-  if [[ -f "$TMPDIR/oisd.txt" ]]; then
+  if [ "$ENABLE_OISD" = 1 ] && [[ -f "$TMPDIR/oisd.txt" ]]; then
     grep -E '^\*\.' "$TMPDIR/oisd.txt" | sed 's/^\*\.//' | head -50000 || true
     grep -v '^#' "$TMPDIR/oisd.txt" | grep -v '^\*' | head -50000 || true
   fi
-} | sort -u > lists/hosts.txt.new && mv lists/hosts.txt.new lists/hosts.txt
+} | sort -u > "lists/${OUTPUT_PREFIX}hosts.txt.new" && mv "lists/${OUTPUT_PREFIX}hosts.txt.new" "lists/${OUTPUT_PREFIX}hosts.txt"
 
 echo "=== Done ==="
 echo "Files updated:"
-wc -l lists/adblock.txt lists/regex.txt lists/hosts.txt
+wc -l "lists/${OUTPUT_PREFIX}adblock.txt" "lists/${OUTPUT_PREFIX}regex.txt" "lists/${OUTPUT_PREFIX}hosts.txt"

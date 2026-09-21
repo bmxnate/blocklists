@@ -1,0 +1,68 @@
+
+adjust.com
+ads.linkedin.com
+ads.pinterest.com
+ads.snapchat.com
+ads.tiktok.com
+ads.tiktokv.com
+ads.twitter.com
+amplitude.com
+analytics.twitter.com
+appsflyer.com
+branch.io
+connect.facebook.net
+dns.adguard.com
+dns.cloudflare.com
+dns.google
+dns.nextdns.io
+dns.quad9.net
+# DoH bypass domains
+doh.cleanbrowsing.org
+doh.dnsforge.de
+doh.dns.sb
+doh.libredns.gr
+doubleclick.net
+facebook.net
+fbcdn.net
+fwmrm.net
+fwmrm.net$important
+# Generated 2026-09-21T01:43:10Z
+googleadservices.com
+google-analytics.com
+googlesyndication.com
+googletagmanager.com
+g*-sle-us-cmaf-prd-fy.cdn.peacocktv.com$important
+heap.io
+ingest.webcol.sdp.peacocktv.com
+ingest.webcol.sdp.peacocktv.com$important
+kochava.com
+linkedin.com
+# Major ad/tracking networks
+mixpanel.com
+mparticle.com
+mparticle.com$important
+native.amazon
+native.apple
+# Native device trackers
+native.lgwebos
+native.roku
+native.samsung
+native.tiktok
+omtrdc.net
+omtrdc.net$important
+pinterest.com
+# Plain domains for Technitium blockListUrls
+scorecardresearch.com
+scorecardresearch.com$important
+segment.io
+singular.net
+snapchat.com
+ssai.peacocktv.com
+ssai.peacocktv.com$important
+# Streaming service ad domains
+t.co
+telemetry.nbcuott.com
+telemetry.nbcuott.com$important
+tenjin.io
+tiktok.com
+twitter.com

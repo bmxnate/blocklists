@@ -34759,6 +34759,7 @@ fwlpazuvbhmkg.online
 fwmknvveyfahw.site
 fwmrm.net
 *.fwmrm.net$important
+fwmrm.net$important
 fwnezrrjmbjjl.space
 fwqasyuebarqa.space
 fwrtzdlspzybl.space
@@ -35395,7 +35396,7 @@ genarchwarlike.cyou
 genbalar.com
 gendbkamiggxs.site
 generalizationhazel.com
-# Generated 2026-09-21T01:11:14Z
+# Generated 2026-09-21T01:43:25Z
 generationdissolvedplease.com
 generationwindscreen.com
 generativelanguage.googleapis.com$third-party
@@ -36835,6 +36836,7 @@ gsitrix.com
 gsjln04hd.com
 gsjzlgynhqgyr.website
 gslb.hpplay.cn
+g*-sle-us-cmaf-prd-fy.cdn.peacocktv.com$important
 gsm-adverts.betstream.betgenius.com
 gsmgwdfyjalio.online
 gs.mountain.com
@@ -41375,6 +41377,7 @@ ingest-sentry.cars24.com
 ingest.sentry.hackthebox.eu
 ingest.skarb.work
 ingest.webcol.sdp.peacocktv.com
+ingest.webcol.sdp.peacocktv.com$important
 ingrammicro.data.adobedc.net
 ingratetalcose.com
 ingratitudealienatedues.com
@@ -53628,6 +53631,7 @@ mp7sblfkx.com
 mp-activity.csdn.net
 mpanythathaveresultet.info
 mparticle.com
+mparticle.com$important
 mpartner.digital
 mpavweetzzsjx.site
 mpb1.iteye.com
@@ -56905,6 +56909,7 @@ omt.dm.ro
 omt.dm.rs
 omt.dm.si
 omtrdc.net
+omtrdc.net$important
 omt.shinobi.jp
 omwvapmytccsc.online
 omxpiremgszzv.space
@@ -67480,6 +67485,7 @@ scorchads.com
 scorchobservedsow.com
 scorchsorchic.com
 scorecardresearch.com
+scorecardresearch.com$important
 scoredbeedged.qpon
 scornfacultative.com
 scornfulleg.com
@@ -80148,6 +80154,7 @@ ssa.foodnetwork.com
 ssa.hgtv.com
 ss.aikido.dev
 ssai.peacocktv.com
+ssai.peacocktv.com$important
 ss.airlandline.co.uk
 ss.ametllerorigen.com
 ss-analytics.ee.co.uk
@@ -85871,6 +85878,7 @@ telemetry.myq-cloud.com.cdn.cloudflare.net
 telemetry-na.docusign.net.akadns.net
 telemetry.navigatorapp.net
 telemetry.nbcuott.com
+telemetry.nbcuott.com$important
 telemetry.ng.colortokens.com
 telemetry.northcentralus.arcdataservices.com
 telemetry.northeurope.arcdataservices.com

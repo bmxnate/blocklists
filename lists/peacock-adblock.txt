@@ -1,0 +1,37 @@
+
+# AdBlock format for Technitium adblockListUrls
+||amplitude.com^$important
+||apple.com^$important
+# Apple TV+
+||appletv.com^$important
+||bamgrid.com^$important
+||cbs.com^$important
+||cbsinteractive.com^$important
+# Disney+
+||disneyplus.com^$important
+||dssott.com^$important
+||fwmrm.net^$important
+# Generated 2026-09-21T01:43:10Z
+# Generic streaming trackers
+||g*-sle-us-cmaf-prd-fy.cdn.peacocktv.com^$important
+||hbo.com^$important
+||hbomax.com^$important
+# HBO Max / Max
+||heap.io^$important
+||ingest.webcol.sdp.peacocktv.com^$important
+||max.com^$important
+||mixpanel.com^$important
+||mparticle.com^$important
+||omtrdc.net^$important
+# Paramount+
+||paramountplus.com^$important
+# Peacock streaming ads
+||ravm.tv^$important
+# Roku
+||roku.com^$important
+||rovicorp.com^$important
+||scorecardresearch.com^$important
+||segment.io^$important
+||skadnetwork.com^$important
+||ssai.peacocktv.com^$important
+||telemetry.nbcuott.com^$important
