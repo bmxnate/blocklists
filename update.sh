@@ -13,34 +13,29 @@ echo "=== Updating blocklists ==="
 TMPDIR=$(mktemp -d)
 trap 'rm -rf "$TMPDIR"' EXIT
 
-# Fetch darthvader666uk gist (AdGuard streaming list)
-echo "Fetching darthvader666uk gist..."
-curl -sL "https://gist.githubusercontent.com/darthvader666uk/ccfdab18b9d59830876c373db8b4210d/raw/filterlist.txt" \
-  -o "$TMPDIR/darthvader.txt" 2>/dev/null || echo "  (gist file not directly accessible, using known domains)"
-
-# Fetch Peacock filterlist from thepeacockproject
-echo "Fetching Peacock filterlist..."
-curl -sL "https://raw.githubusercontent.com/thepeacockproject/Peacock/main/filterlist.txt" \
-  -o "$TMPDIR/peacock.txt" 2>/dev/null || echo "  (Peacock filterlist not at expected path)"
-
-# Fetch Hagezi Multi PRO (base for darthvader666uk)
+# Fetch Hagezi Multi PRO (wildcard format)
 echo "Fetching Hagezi Multi PRO..."
 curl -sL "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/pro.txt" \
   -o "$TMPDIR/hagezi-pro.txt" 2>/dev/null || echo "  (Hagezi fetch failed)"
 
-# Fetch OISD basic
-echo "Fetching OISD basic..."
-curl -sL "https://raw.githubusercontent.com/sjhgvr/oisd/main/domains_basic.txt" \
+# Fetch OISD small (domains with wildcards)
+echo "Fetching OISD small..."
+curl -sL "https://raw.githubusercontent.com/sjhgvr/oisd/main/domainswild2_small.txt" \
   -o "$TMPDIR/oisd.txt" 2>/dev/null || echo "  (OISD fetch failed)"
 
-# Build adblock.txt - AdBlock format
+# Fetch Peacock filterlist
+echo "Fetching Peacock filterlist..."
+curl -sL "https://raw.githubusercontent.com/thepeacockproject/Peacock/main/filterlist.txt" \
+  -o "$TMPDIR/peacock.txt" 2>/dev/null || echo "  (Peacock fetch failed)"
+
+# Build adblock.txt - AdBlock format (||domain^)
 echo "Building adblock.txt..."
 {
   echo "# Generated $(date -u +%Y-%m-%dT%H:%M:%SZ)"
   echo "# AdBlock format for Technitium adblockListUrls"
   echo ""
   
-  # Peacock/streaming specific (from known sources)
+  # Seed streaming ad rules
   cat <<'EOF'
 # Peacock streaming ads
 ||g*-sle-us-cmaf-prd-fy.cdn.peacocktv.com^$important
@@ -76,14 +71,25 @@ echo "Building adblock.txt..."
 ||apple.com^$important
 ||appletv.com^$important
 ||skadnetwork.com^$important
+
+# Generic streaming trackers
+||segment.io^$important
+||mixpanel.com^$important
+||amplitude.com^$important
+||heap.io^$important
 EOF
 
-  # Extract ||domain^ lines from downloaded sources
+  # Convert Hagezi wildcards to AdBlock format
   if [[ -f "$TMPDIR/hagezi-pro.txt" ]]; then
-    grep -E '^\|\|[^|]+\^' "$TMPDIR/hagezi-pro.txt" | head -500 || true
+    # *.domain.com -> ||domain.com^
+    grep -E '^\*\.' "$TMPDIR/hagezi-pro.txt" | sed 's/^\*\.//; s/$/\^/' | sed 's/^/||/' | head -20000 || true
   fi
+  
+  # Convert OISD wildcards to AdBlock format
   if [[ -f "$TMPDIR/oisd.txt" ]]; then
-    grep -E '^\|\|[^|]+\^' "$TMPDIR/oisd.txt" | head -500 || true
+    grep -E '^\*\.' "$TMPDIR/oisd.txt" | sed 's/^\*\.//; s/$/\^/' | sed 's/^/||/' | head -20000 || true
+    # Also plain domains in OISD
+    grep -v '^#' "$TMPDIR/oisd.txt" | grep -v '^\*' | sed 's/^/||/; s/$/\^/' | head -20000 || true
   fi
 } | sort -u > adblock.txt.new && mv adblock.txt.new adblock.txt
 
@@ -204,13 +210,15 @@ dns.adguard.com
 dns.nextdns.io
 EOF
 
-  # Extract plain domains from Hagezi/OISD (strip 0.0.0.0 prefix if present)
+  # Convert Hagezi wildcards to plain domains (strip *.)
   if [[ -f "$TMPDIR/hagezi-pro.txt" ]]; then
-    grep -E '^0\.0\.0\.0\s+' "$TMPDIR/hagezi-pro.txt" | awk '{print $2}' | head -1000 || true
-    grep -E '^\|\|[^|]+\^' "$TMPDIR/hagezi-pro.txt" | sed -E 's/\|\|([^|]+)\^/\1/' | head -1000 || true
+    grep -E '^\*\.' "$TMPDIR/hagezi-pro.txt" | sed 's/^\*\.//' | head -50000 || true
   fi
+  
+  # OISD domains (strip wildcards and comments)
   if [[ -f "$TMPDIR/oisd.txt" ]]; then
-    grep -v '^#' "$TMPDIR/oisd.txt" | head -2000 || true
+    grep -E '^\*\.' "$TMPDIR/oisd.txt" | sed 's/^\*\.//' | head -50000 || true
+    grep -v '^#' "$TMPDIR/oisd.txt" | grep -v '^\*' | head -50000 || true
   fi
 } | sort -u > hosts.txt.new && mv hosts.txt.new hosts.txt
 
