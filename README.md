@@ -35,13 +35,13 @@ Click the app's **Config** button and paste:
       "blockAsNxDomain": true,
       "blockingAddresses": ["0.0.0.0", "::"],
       "adblockListUrls": [
-        "https://raw.githubusercontent.com/bmxnate/blocklists/main/lists/adblock.txt"
+        "https://raw.githubusercontent.com/bmxnate/blocklists/master/lists/adblock.txt"
       ],
       "regexBlockListUrls": [
-        "https://raw.githubusercontent.com/bmxnate/blocklists/main/lists/regex.txt"
+        "https://raw.githubusercontent.com/bmxnate/blocklists/master/lists/regex.txt"
       ],
       "blockListUrls": [
-        "https://raw.githubusercontent.com/bmxnate/blocklists/main/lists/hosts.txt"
+        "https://raw.githubusercontent.com/bmxnate/blocklists/master/lists/hosts.txt"
       ]
     }
   ]
