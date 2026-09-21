@@ -1,0 +1,15 @@
+# lit-bg/Peacock - Converted to AdBlock format
+# Source: https://github.com/lit-bg/Peacock/blob/main/filterlist.txt
+# Generated: 2026-09-21
+
+# Peacock ad shards (wildcard)
+||g*-sle-us-cmaf-prd-fy.cdn.peacocktv.com^$important
+
+# Tracking/telemetry
+||mparticle.com^$important
+||fwmrm.net^$important
+||scorecardresearch.com^$important
+||omtrdc.net^$important
+||ingest.webcol.sdp.peacocktv.com^$important
+||telemetry.nbcuott.com^$important
+||ssai.peacocktv.com^$important

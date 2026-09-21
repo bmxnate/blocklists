@@ -1,0 +1,15 @@
+# lit-bg/Peacock - Converted to plain domains (hosts format)
+# Source: https://github.com/lit-bg/Peacock/blob/main/filterlist.txt
+# Generated: 2026-09-21
+
+# Peacock ad shards (wildcard - not applicable to hosts format)
+# g*-sle-us-cmaf-prd-fy.cdn.peacocktv.com
+
+# Tracking/telemetry
+mparticle.com
+fwmrm.net
+scorecardresearch.com
+omtrdc.net
+ingest.webcol.sdp.peacocktv.com
+telemetry.nbcuott.com
+ssai.peacocktv.com
