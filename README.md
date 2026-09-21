@@ -57,6 +57,7 @@ Adjust `networkGroupMap` to assign different client subnets to different groups 
 | **[Hagezi Pro Plus](https://github.com/hagezi/dns-blocklists)** | Ads, tracking, malware, phishing, telemetry (~150k domains in AdBlock format) | MIT |
 | **[OISD Small](https://github.com/sjhgvr/oisd)** | Curated ads/tracking/malware (~56k wildcards + domains) | MIT |
 | **[Peacock Project](https://github.com/thepeacockproject/Peacock)** | Streaming service ad domains (Peacock, HBO, Disney+, etc.) | AGPL-3.0 |
+| **[darthvader666uk/blocklists](https://gist.github.com/darthvader666uk/ccfdab18b9d59830876c373db8b4210d)** | Streaming service ads (Peacock, HBO Max, Disney+, Paramount+, Roku, UK catch-up) | MIT |
 | **Custom seeds** | Native device trackers, DoH bypass domains, major ad networks | MIT |
 
 All sources are merged, converted to three formats, and deduplicated.

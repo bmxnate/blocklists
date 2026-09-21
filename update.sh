@@ -23,6 +23,11 @@ echo "Fetching OISD small..."
 curl -sL "https://raw.githubusercontent.com/sjhgvr/oisd/main/domainswild2_small.txt" \
   -o "$TMPDIR/oisd.txt" 2>/dev/null || echo "  (OISD fetch failed)"
 
+# Fetch darthvader666uk streaming ads (from gist)
+echo "Fetching darthvader666uk streaming ads..."
+curl -sL "https://gist.githubusercontent.com/darthvader666uk/ccfdab18b9d59830876c373db8b4210d/raw/filterlist.txt" \
+  -o "$TMPDIR/darthvader.txt" 2>/dev/null || echo "  (darthvader666uk fetch failed)"
+
 # Fetch Peacock filterlist
 echo "Fetching Peacock filterlist..."
 curl -sL "https://raw.githubusercontent.com/thepeacockproject/Peacock/main/filterlist.txt" \
@@ -82,6 +87,11 @@ EOF
   # Hagezi Pro Plus is already in AdBlock format - extract ||domain^ lines
   if [[ -f "$TMPDIR/hagezi-pro.txt" ]]; then
     grep -E '^\|\|[^|]+\^' "$TMPDIR/hagezi-pro.txt" | head -50000 || true
+  fi
+  
+  # darthvader666uk streaming ads - extract ||domain^ lines
+  if [[ -f "$TMPDIR/darthvader.txt" ]]; then
+    grep -E '^\|\|[^|]+\^' "$TMPDIR/darthvader.txt" | head -5000 || true
   fi
   
   # Convert OISD wildcards to AdBlock format
@@ -212,6 +222,11 @@ EOF
   # Hagezi Pro Plus - extract domains from ||domain^ format
   if [[ -f "$TMPDIR/hagezi-pro.txt" ]]; then
     grep -E '^\|\|[^|]+\^' "$TMPDIR/hagezi-pro.txt" | sed -E 's/\|\|([^|]+)\^/\1/' | head -50000 || true
+  fi
+  
+  # darthvader666uk streaming ads - extract domains from ||domain^ format
+  if [[ -f "$TMPDIR/darthvader.txt" ]]; then
+    grep -E '^\|\|[^|]+\^' "$TMPDIR/darthvader.txt" | sed -E 's/\|\|([^|]+)\^/\1/' | head -5000 || true
   fi
   
   # OISD domains (strip wildcards and comments)
