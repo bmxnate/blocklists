@@ -1,18 +1,22 @@
 # Curated Blocklists for Technitium Advanced Blocking App
 
-This repository provides clean, format-separated blocklists optimized for Technitium DNS Server's **Advanced Blocking App**.
+This repository provides clean, format-separated blocklists optimized for **Technitium DNS Server**'s **Advanced Blocking App**.
 
-## Files
+## Lists
 
-| File | Format | Technitium Config Field |
-|------|--------|------------------------|
-| `adblock.txt` | AdBlock (`||domain^`, `@@||exception^`) | `adblockListUrls` |
-| `regex.txt` | .NET Regex (one per line, no delimiters) | `regexBlockListUrls` |
-| `hosts.txt` | Plain domains (one per line) | `blockListUrls` |
+| File | Format | Technitium Config Field | Lines |
+|------|--------|------------------------|-------|
+| `lists/adblock.txt` | AdBlock (`\|\|domain^`, `@@\|\|exception^`) | `adblockListUrls` | ~37k |
+| `lists/regex.txt` | .NET Regex (one per line, no delimiters) | `regexBlockListUrls` | ~30 |
+| `lists/hosts.txt` | Plain domains (one per line) | `blockListUrls` | ~91k |
 
-## Usage in Technitium
+## Quick Start
 
-Install the **Advanced Blocking App** from the App Store, then configure via the Config button:
+### 1. Install Advanced Blocking App
+In Technitium Web UI → **Apps** → **App Store** → search "Advanced Blocking" → **Install**
+
+### 2. Configure
+Click the app's **Config** button and paste:
 
 ```json
 {
@@ -31,38 +35,73 @@ Install the **Advanced Blocking App** from the App Store, then configure via the
       "blockAsNxDomain": true,
       "blockingAddresses": ["0.0.0.0", "::"],
       "adblockListUrls": [
-        "https://raw.githubusercontent.com/bmxnate/blocklists/main/adblock.txt"
+        "https://raw.githubusercontent.com/bmxnate/blocklists/main/lists/adblock.txt"
       ],
       "regexBlockListUrls": [
-        "https://raw.githubusercontent.com/bmxnate/blocklists/main/regex.txt"
+        "https://raw.githubusercontent.com/bmxnate/blocklists/main/lists/regex.txt"
       ],
       "blockListUrls": [
-        "https://raw.githubusercontent.com/bmxnate/blocklists/main/hosts.txt"
+        "https://raw.githubusercontent.com/bmxnate/blocklists/main/lists/hosts.txt"
       ]
     }
   ]
 }
 ```
 
+Adjust `networkGroupMap` to assign different client subnets to different groups if desired.
+
 ## Sources Aggregated
 
-- **Streaming service ads**: Peacock, HBO Max, Disney+, Paramount+, Roku, etc.
-- **Tracking/telemetry**: Hagezi, OISD, Blocklist Project, AdGuard
-- **Malware/phishing**: Blocklist Project, URLHaus
-- **Custom**: Local additions in `custom/` directory
+| Source | Description |
+|--------|-------------|
+| **Hagezi Multi PRO** | Ads, tracking, malware, phishing, telemetry (~100k wildcards) |
+| **OISD Small** | Curated ads/tracking/malware (~56k wildcards + domains) |
+| **Peacock Project** | Streaming service ad domains (Peacock, HBO, Disney+, etc.) |
+| **Custom seeds** | Native device trackers, DoH bypass domains, major ad networks |
 
-## Update Process
+All sources are merged, converted to three formats, and deduplicated.
 
-Run the update script to fetch upstream sources and regenerate clean files:
+## Automated Updates
 
+A GitHub Actions workflow runs **every Saturday 01:00 UTC**:
+1. Fetches latest upstream sources
+2. Regenerates all three list files
+3. Commits & pushes if changed
+
+Technitium auto-fetches on its `blockListUrlUpdateIntervalHours` schedule (default 24h).
+
+### Manual Update
 ```bash
 ./update.sh
+git add -A && git commit -m "Update blocklists" && git push
 ```
 
-Then commit and push. Technitium will auto-fetch on its `blockListUrlUpdateIntervalHours` schedule.
+## Format Reference
 
-## Format Notes
+| Format | Syntax | Example |
+|--------|--------|---------|
+| **AdBlock** | `\|\|domain^`, `@@\|\|exception^` | `\|\|googleadservices.com^` |
+| **.NET Regex** | Raw regex, one per line | `^ads\d*\.\` |
+| **Hosts** | Plain domain, one per line | `doubleclick.net` |
 
-- **AdBlock**: Uses `||domain^` syntax. Wildcards (`*`) allowed. Options after `$`.
-- **.NET Regex**: Full .NET regex engine. No `/.../` delimiters. Escape backslashes in JSON (`\\.` not `\.`).
-- **Hosts**: Plain `domain.com` or `sub.domain.com` — one per line. No `0.0.0.0` prefix needed.
+**Notes:**
+- Regex uses **.NET engine** — no `/.../` delimiters, escape backslashes in JSON (`\\\\.`)
+- AdBlock wildcards (`*`) allowed; options after `$`
+- Hosts: bare domains only, no `0.0.0.0` prefix
+
+## Repository Structure
+
+```
+blocklists/
+├── .github/workflows/update-blocklists.yml  # Weekly automation
+├── lists/
+│   ├── adblock.txt      # AdBlock format
+│   ├── regex.txt        # .NET regex format
+│   └── hosts.txt        # Plain domains
+├── update.sh            # Local update script
+└── README.md
+```
+
+## License
+
+Upstream sources retain their original licenses (MIT, GPL-3.0, etc.). This repo's automation code is MIT.

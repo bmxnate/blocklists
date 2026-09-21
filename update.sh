@@ -91,7 +91,7 @@ EOF
     # Also plain domains in OISD
     grep -v '^#' "$TMPDIR/oisd.txt" | grep -v '^\*' | sed 's/^/||/; s/$/\^/' | head -20000 || true
   fi
-} | sort -u > adblock.txt.new && mv adblock.txt.new adblock.txt
+} | sort -u > lists/adblock.txt.new && mv lists/adblock.txt.new lists/adblock.txt
 
 # Build regex.txt - .NET regex format
 echo "Building regex.txt..."
@@ -138,7 +138,7 @@ EOF
   if [[ -f "$TMPDIR/peacock.txt" ]]; then
     grep -E '^/.*/$' "$TMPDIR/peacock.txt" | sed 's|^/||; s|/$||' || true
   fi
-} | sort -u > regex.txt.new && mv regex.txt.new regex.txt
+} | sort -u > lists/regex.txt.new && mv lists/regex.txt.new lists/regex.txt
 
 # Build hosts.txt - plain domains
 echo "Building hosts.txt..."
@@ -220,8 +220,8 @@ EOF
     grep -E '^\*\.' "$TMPDIR/oisd.txt" | sed 's/^\*\.//' | head -50000 || true
     grep -v '^#' "$TMPDIR/oisd.txt" | grep -v '^\*' | head -50000 || true
   fi
-} | sort -u > hosts.txt.new && mv hosts.txt.new hosts.txt
+} | sort -u > lists/hosts.txt.new && mv lists/hosts.txt.new lists/hosts.txt
 
 echo "=== Done ==="
 echo "Files updated:"
-wc -l adblock.txt regex.txt hosts.txt
+wc -l lists/adblock.txt lists/regex.txt lists/hosts.txt
