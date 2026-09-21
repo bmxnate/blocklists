@@ -20172,6 +20172,7 @@
 ||cenont.xyz^
 ||cenoobi.run^
 ||census-app.scorecardresearch.com^
+||census-app.scorecardresearch.com^$important
 ||censuscompassembryo.com^
 ||censusmarrydespair.com^
 ||centaurs-rest.coupang.com^
@@ -33755,6 +33756,7 @@
 ||fv.equalsrepine.top^
 ||fvmpm.fromrebel.com^
 ||fwdcmp-collector-elb-1068580620.us-east-1.elb.amazonaws.com^
+||*.fwmrm.net^$important
 ||fwmrm.net^$important
 ||fwvtboqfnk.data.adobedc.net^
 ||fwzxb0jeq2.data.adobedc.net^
@@ -33976,7 +33978,7 @@
 ||gemiad.s3.eu-central-1.amazonaws.com^
 ||gemstarz.company.site^
 ||gemtun.ctnewsjunkie.com^
-# Generated 2026-09-21T01:02:42Z
+# Generated 2026-09-21T01:11:14Z
 ||generativelanguage.googleapis.com^$third-party
 ||generic.gmx.net^
 # Generic streaming trackers
@@ -36098,6 +36100,7 @@
 ||identification.hotmart.com^
 ||identity.browserapps.amazon.de^
 ||identity.cheatmyvegas.com^
+||identity.mparticle.com^$important
 ||identity.nel.measure.office.net.cardano.com^
 ||ide-telemetry.cloudformation.aws.dev^
 ||idg1.idgarages.com^
@@ -42815,6 +42818,8 @@
 ||nba2k26-telemetry-prod-elb-589225582.us-east-1.elb.amazonaws.com^
 ||nbb-app-gtm-sst-tagging.azurewebsites.net^
 ||nbc0p3e0p5.data.adobedc.net^
+||nbcstreaming.hb-api.omtrdc.net^$important
+||nbcstreaming.sc.omtrdc.net^$important
 ||nbcstreamingservice.data.adobedc.net^
 ||nbcuniversal.data.adobedc.net^
 ||nb.gamevil.com^
@@ -46848,6 +46853,7 @@
 ||rz.fotiveearns.com^
 ||rz.hallszimmy.shop^
 ||rzycucbupk.gyhjjifm.beauty^
+||s0.2mdn.net^
 ||s10.adduplex.com^
 ||s1325.t.eloqua.com^
 ||s15-ad.ap4r.com^
@@ -47053,6 +47059,7 @@
 ||sas-ads-v3-load-balancer-1340544848.eu-west-1.elb.amazonaws.com^
 ||sas-ads-v3-load-balancer-576131235.us-east-1.elb.amazonaws.com^
 ||sasinator.realestate.com.au^
+||sas.peacocktv.com^$important
 ||sass.com.ua^
 ||sas.techhub.co.kr^
 ||sat.cellordion3.net^
@@ -47093,6 +47100,7 @@
 ||sbm49.gotrackier.com^
 ||s.boulezsaal.de^
 ||sbsaustralia.data.adobedc.net^
+||sb.scorecardresearch.com^$important
 ||sbtb-ad-images.b-cdn.net^
 ||s.btime.com^
 ||s.bunkr.ru^
@@ -64375,6 +64383,8 @@
 ||vaali-mcs-useast1a.byteoversea.com^
 ||vaali-mcs-useast2a.byteoversea.com^
 ||vaccination.gov.ng^
+||*.vac.peacocktv.com^$important
+||vac.peacocktv.com^$important
 ||v.adblockultimate.net^
 ||vaes.amazon-adsystem.com^
 ||vaes-eu.amazon-adsystem.com^
@@ -64508,6 +64518,7 @@
 ||video231.oss-cn-beijing.aliyuncs.com^
 ||video-ads.a2z.com^
 ||video-ads.easybrain.com^
+||video-ads-module.ad-tech.nbcuni.com^$important
 ||video-ads.rubiconproject.com-v1.edgekey.net^
 ||video-analytics-api.cloudinary.com^
 ||video-analytics.gaia.com^

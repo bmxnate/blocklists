@@ -20168,6 +20168,7 @@ cennter.com
 cenont.xyz
 cenoobi.run
 census-app.scorecardresearch.com
+census-app.scorecardresearch.com$important
 censuscompassembryo.com
 censusmarrydespair.com
 centaurs-rest.coupang.com
@@ -34757,6 +34758,7 @@ fwlkokvvkx.icu
 fwlpazuvbhmkg.online
 fwmknvveyfahw.site
 fwmrm.net
+*.fwmrm.net$important
 fwnezrrjmbjjl.space
 fwqasyuebarqa.space
 fwrtzdlspzybl.space
@@ -35393,7 +35395,7 @@ genarchwarlike.cyou
 genbalar.com
 gendbkamiggxs.site
 generalizationhazel.com
-# Generated 2026-09-21T01:02:42Z
+# Generated 2026-09-21T01:11:14Z
 generationdissolvedplease.com
 generationwindscreen.com
 generativelanguage.googleapis.com$third-party
@@ -40430,6 +40432,7 @@ identifycertainlybookie.com
 identify.hotjar.com
 identity.browserapps.amazon.de
 identity.cheatmyvegas.com
+identity.mparticle.com$important
 identity.nel.measure.office.net.cardano.com
 identitypxl.app
 identitypxl.com
@@ -54572,6 +54575,8 @@ nbbtcqoejxhgd.online
 nbc0p3e0p5.data.adobedc.net
 nbcollect.kugou.com
 nbcollectretry.kugou.com
+nbcstreaming.hb-api.omtrdc.net$important
+nbcstreaming.sc.omtrdc.net$important
 nbcstreamingservice.data.adobedc.net
 nbcuniversal.data.adobedc.net
 nbdysfxadsfji.website
@@ -66790,6 +66795,7 @@ rzycucbupk.gyhjjifm.beauty
 rzykqaazcqcfc.online
 s002o2hkg.com
 s00hv1jp8.com
+s0.2mdn.net
 s06g9qvr5.com
 s0-greate.net
 s0khf11i8.com
@@ -67217,6 +67223,7 @@ sasinsetuid.com
 sas.int-nft.peacocktv.com
 sasmetotreatwit.org
 sas.nsm-corp.com
+sas.peacocktv.com$important
 sass.com.ua
 sas.stable-int.peacocktv.com
 sas.techhub.co.kr
@@ -67326,6 +67333,7 @@ sbrxizryixvpz.space
 sbsaustralia.data.adobedc.net
 sbsbetlinfevn.site
 sb.scorecard.research.com
+sb.scorecardresearch.com$important
 sb-stat1.com
 sbtb-ad-images.b-cdn.net
 s.btime.com
@@ -91613,6 +91621,8 @@ vaali-mcs.byteoversea.com
 vaali-mcs-useast1a.byteoversea.com
 vaali-mcs-useast2a.byteoversea.com
 vaccination.gov.ng
+*.vac.peacocktv.com$important
+vac.peacocktv.com$important
 v.adblockultimate.net
 vaes.amazon-adsystem.com
 vaes-eu.amazon-adsystem.com
@@ -91746,6 +91756,7 @@ vid.24ur.com
 video231.oss-cn-beijing.aliyuncs.com
 video-ads.a2z.com
 video-ads.easybrain.com
+video-ads-module.ad-tech.nbcuni.com$important
 video-ads.rubiconproject.com-v1.edgekey.net
 video-analytics-api.cloudinary.com
 video-analytics.gaia.com

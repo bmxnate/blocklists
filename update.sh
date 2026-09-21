@@ -28,10 +28,15 @@ echo "Fetching darthvader666uk streaming ads..."
 curl -sL "https://gist.githubusercontent.com/darthvader666uk/ccfdab18b9d59830876c373db8b4210d/raw/filterlist.txt" \
   -o "$TMPDIR/darthvader.txt" 2>/dev/null || echo "  (darthvader666uk fetch failed)"
 
-# Fetch Peacock filterlist
-echo "Fetching Peacock filterlist..."
-curl -sL "https://raw.githubusercontent.com/thepeacockproject/Peacock/main/filterlist.txt" \
-  -o "$TMPDIR/peacock.txt" 2>/dev/null || echo "  (Peacock fetch failed)"
+# Fetch lit-bg/Peacock filterlist
+echo "Fetching lit-bg/Peacock filterlist..."
+curl -sL "https://raw.githubusercontent.com/lit-bg/Peacock/main/filterlist.txt" \
+  -o "$TMPDIR/peacock.txt" 2>/dev/null || echo "  (lit-bg/Peacock fetch failed)"
+
+# Fetch ajstrick81 Peacock-Ads
+echo "Fetching ajstrick81/Peacock-Ads..."
+curl -sL "https://raw.githubusercontent.com/ajstrick81/Peacock-Ads/main/peacock-adguard-user-rules.txt" \
+  -o "$TMPDIR/ajstrick81.txt" 2>/dev/null || echo "  (ajstrick81/Peacock-Ads fetch failed)"
 
 # Build adblock.txt - AdBlock format (||domain^)
 echo "Building adblock.txt..."
@@ -92,6 +97,11 @@ EOF
   # darthvader666uk streaming ads - extract ||domain^ lines
   if [[ -f "$TMPDIR/darthvader.txt" ]]; then
     grep -E '^\|\|[^|]+\^' "$TMPDIR/darthvader.txt" | head -5000 || true
+  fi
+  
+  # ajstrick81 Peacock-Ads - extract ||domain^ lines
+  if [[ -f "$TMPDIR/ajstrick81.txt" ]]; then
+    grep -E '^\|\|[^|]+\^' "$TMPDIR/ajstrick81.txt" | head -5000 || true
   fi
   
   # Convert OISD wildcards to AdBlock format
@@ -227,6 +237,11 @@ EOF
   # darthvader666uk streaming ads - extract domains from ||domain^ format
   if [[ -f "$TMPDIR/darthvader.txt" ]]; then
     grep -E '^\|\|[^|]+\^' "$TMPDIR/darthvader.txt" | sed -E 's/\|\|([^|]+)\^/\1/' | head -5000 || true
+  fi
+  
+  # ajstrick81 Peacock-Ads - extract domains from ||domain^ format
+  if [[ -f "$TMPDIR/ajstrick81.txt" ]]; then
+    grep -E '^\|\|[^|]+\^' "$TMPDIR/ajstrick81.txt" | sed -E 's/\|\|([^|]+)\^/\1/' | head -5000 || true
   fi
   
   # OISD domains (strip wildcards and comments)
