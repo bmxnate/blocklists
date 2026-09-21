@@ -13,9 +13,9 @@ echo "=== Updating blocklists ==="
 TMPDIR=$(mktemp -d)
 trap 'rm -rf "$TMPDIR"' EXIT
 
-# Fetch Hagezi Multi PRO (wildcard format)
-echo "Fetching Hagezi Multi PRO..."
-curl -sL "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/pro.txt" \
+# Fetch Hagezi Multi PRO Plus (AdBlock format)
+echo "Fetching Hagezi Pro Plus..."
+curl -sL "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.plus.txt" \
   -o "$TMPDIR/hagezi-pro.txt" 2>/dev/null || echo "  (Hagezi fetch failed)"
 
 # Fetch OISD small (domains with wildcards)
@@ -79,10 +79,9 @@ echo "Building adblock.txt..."
 ||heap.io^$important
 EOF
 
-  # Convert Hagezi wildcards to AdBlock format
+  # Hagezi Pro Plus is already in AdBlock format - extract ||domain^ lines
   if [[ -f "$TMPDIR/hagezi-pro.txt" ]]; then
-    # *.domain.com -> ||domain.com^
-    grep -E '^\*\.' "$TMPDIR/hagezi-pro.txt" | sed 's/^\*\.//; s/$/\^/' | sed 's/^/||/' | head -20000 || true
+    grep -E '^\|\|[^|]+\^' "$TMPDIR/hagezi-pro.txt" | head -50000 || true
   fi
   
   # Convert OISD wildcards to AdBlock format
@@ -210,9 +209,9 @@ dns.adguard.com
 dns.nextdns.io
 EOF
 
-  # Convert Hagezi wildcards to plain domains (strip *.)
+  # Hagezi Pro Plus - extract domains from ||domain^ format
   if [[ -f "$TMPDIR/hagezi-pro.txt" ]]; then
-    grep -E '^\*\.' "$TMPDIR/hagezi-pro.txt" | sed 's/^\*\.//' | head -50000 || true
+    grep -E '^\|\|[^|]+\^' "$TMPDIR/hagezi-pro.txt" | sed -E 's/\|\|([^|]+)\^/\1/' | head -50000 || true
   fi
   
   # OISD domains (strip wildcards and comments)
