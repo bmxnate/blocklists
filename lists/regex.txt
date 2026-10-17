@@ -1,6 +1,6 @@
 
 # .NET Regex format for Technitium regexBlockListUrls
-# Generated 2026-10-10T06:33:09Z
+# Generated 2026-10-17T05:12:53Z
 # Generic ad subdomain patterns
 # Native device trackers
 # One pattern per line, NO / delimiters
